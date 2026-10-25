@@ -1,0 +1,151 @@
+Database Connection Code:
+
+<?php
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "tourism_db";
+
+// Create connection
+$conn = mysqli_connect($servername, $username, $password, $dbname);
+
+
+// Check connection if (!$conn) {
+die("Connection failed: " . mysqli_connect_error());
+}
+
+
+echo "Connected successfully";
+?>
+
+
+
+Admin Login Verification Code
+
+
+<?php session_start(); include("db_connect.php");
+
+$username = $_POST['username'];
+$password = $_POST['password'];
+
+
+$sql = "SELECT * FROM admin WHERE username='$username' AND password='$password'";
+$result = mysqli_query($conn, $sql);
+
+if(mysqli_num_rows($result) == 1)
+{ 
+Insert Destination Details Code
+<?php include("db_connect.php");
+
+$place_name = $_POST['place_name'];
+$location = $_POST['location'];
+$description = $_POST['description'];
+
+
+$sql = "INSERT INTO destination(place_name, location, description) VALUES('$place_name','$location','$description')";
+
+if(mysqli_query($conn,$sql))
+{
+echo "Destination Added Successfully";
+}
+else
+{
+echo "Error inserting record";
+}
+?>
+
+Display Destination Details Code
+<?php include("db_connect.php");
+
+$sql = "SELECT * FROM destination";
+$result = mysqli_query($conn,$sql);
+
+
+while($row=mysqli_fetch_assoc($result))
+{
+echo "Place Name: ".$row['place_name']."<br>"; echo "Location: ".$row['location']."<br>";
+echo "Description: ".$row['description']."<br><br>";
+}
+?>
+
+
+Update Destination Details Code
+<?php include("db_connect.php"); 
+$sql = "UPDATE destination SET place_name='$place_name' WHERE id='$id'";
+
+if(mysqli_query($conn,$sql))
+{
+echo "Record Updated Successfully";
+}
+else
+{
+echo "Update Failed";
+}
+?>
+
+Delete Destination Record Code
+<?php include("db_connect.php");
+
+$id = $_GET['id'];
+$sql = "DELETE FROM destination WHERE id='$id'"; if(mysqli_query($conn,$sql))
+{
+echo "Record Deleted Successfully";
+}
+else
+{
+echo "Deletion Failed";
+}
+?>
+
+
+User Registration Code
+<?php include("db_connect.php");
+
+$name = $_POST['name'];
+$email = $_POST['email'];
+$password = $_POST['password'];
+
+
+$sql = "INSERT INTO users(name,email,password) VALUES('$name','$email','$password')"; 
+}
+else
+{
+echo "Registration Failed";
+}
+?>
+
+
+Feedback Submission Code
+<?php include("db_connect.php");
+
+$username = $_POST['username'];
+$message = $_POST['message'];
+$sql = "INSERT INTO feedback(username,message) VALUES('$username','$message')"; if(mysqli_query($conn,$sql))
+{
+echo "Feedback Submitted Successfully";
+}
+else
+{
+echo "Submission Failed";
+}
+?>
+
+
+Retrieve Feedback for Admin Code
+<?php include("db_connect.php");
+
+$sql = "SELECT * FROM feedback";
+$result = mysqli_query($conn,$sql);
+
+while($row=mysqli_fetch_assoc($result))
+{
+echo "User: ".$row['username']."<br>";
+echo "Message: ".$row['message']."<br><br>";
+}
+?> 
+Logout Session Code
+<?php session_start(); session_destroy();
+header("location:login.php");
+?>
+
+
